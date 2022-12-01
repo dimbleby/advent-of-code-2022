@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "advent"
+version = "0.1.0"
+description = ""
+authors = ["David Hotham <david.hotham@microsoft.com>"]
+readme = "README.md"
+packages = [{include = "advent"}]
+
+[tool.poetry.dependencies]
+python = "^3.8.2"
+attrs = "^22.1.0"
+
+[tool.poetry.group.dev.dependencies]
+black = ">=22.10.0"
+flake8 = ">=6.0.0"
+flake8-type-checking = ">=2.3.0"
+isort = ">=5.10.1"
+mypy = ">=0.991"
+
+[tool.poetry.scripts]
+advent = "advent.main:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+files = "."
+enable_error_code = [
+  "ignore-without-code",
+  "redundant-expr",
+  "truthy-bool",
+]
+strict = true
