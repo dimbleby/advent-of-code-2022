@@ -32,3 +32,6 @@ enable_error_code = [
   "truthy-bool",
 ]
 strict = true
+
+[tool.isort]
+profile = "black"
