@@ -17,7 +17,7 @@ class Instruction(ABC):
         if words[0] == "addx":
             return Addx(int(words[1]))
 
-        assert False
+        raise AssertionError
 
     @property
     @abstractmethod
