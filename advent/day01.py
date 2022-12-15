@@ -33,7 +33,3 @@ def solve() -> None:
     totals = sorted((elf.total() for elf in elves), reverse=True)
     part_two = sum(totals[:3])
     print(f"Part two: {part_two}")
-
-
-if __name__ == "__main__":
-    solve()
