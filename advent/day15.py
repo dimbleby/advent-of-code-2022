@@ -50,34 +50,6 @@ class RangeUnion:
     def size(self) -> int:
         return sum(r.size() for r in self.ranges)
 
-    def intersect(self, other: Range) -> None:
-        ranges: set[Range] = set()
-        for old_range in self.ranges:
-            if old_range.hi < other.lo:
-                continue
-
-            if old_range.lo > other.hi:
-                continue
-
-            lo = max(old_range.lo, other.lo)
-            hi = min(old_range.hi, other.hi)
-            ranges.add(Range(lo, hi))
-
-        self.ranges = ranges
-
-    def gap(self) -> int | None:
-        if len(self.ranges) != 2:
-            return None
-
-        this, that = list(self.ranges)
-        if this.hi + 1 == that.lo:
-            return this.hi
-
-        if that.hi + 1 == this.lo:
-            return that.hi
-
-        raise AssertionError
-
 
 def solve() -> None:
     input = data_dir() / "day15.txt"
@@ -103,9 +75,10 @@ def solve() -> None:
         lo = sensor.x - spare_range
         hi = sensor.x + spare_range
 
-        # Exclude the beacons themselves in part one.
+        # Exclude the beacons themselves.
         if beacon.x == lo:
             lo += 1
+
         if beacon.x == hi:
             hi -= 1
 
@@ -113,21 +86,31 @@ def solve() -> None:
 
     print(f"Part one: {visible.size()}")
 
-    for row in range(4000001):
-        visible = RangeUnion()
-        for sensor, beacon in facts:
-            beaker_distance = sensor.manhattan(beacon)
-            row_distance = abs(sensor.y - row)
-            spare_range = beaker_distance - row_distance
-            if spare_range < 0:
-                continue
+    sensors = [(sensor, sensor.manhattan(beacon)) for sensor, beacon in facts]
+    stack = [(Cell(0, 0), Cell(4000000, 4000000))]
+    while stack:
+        nw, se = stack.pop()
+        ne = Cell(se.x, nw.y)
+        sw = Cell(nw.x, se.y)
+        covered = False
+        for sensor, distance in sensors:
+            if all(sensor.manhattan(corner) <= distance for corner in (nw, ne, se, sw)):
+                covered = True
+                break
 
-            lo = sensor.x - spare_range
-            hi = sensor.x + spare_range
-            visible.add(Range(lo, hi + 1))
+        if covered:
+            continue
 
-        visible.intersect(Range(0, 4000001))
-        gap = visible.gap()
-        if gap is not None:
-            print(f"Part two: {4000000 * gap + row}")
+        if nw == se:
+            print(f"Part two: {4000000 * nw.x + nw.y}")
             break
+
+        midx = (nw.x + se.x) // 2
+        midy = (nw.y + se.y) // 2
+        stack.append((nw, Cell(midx, midy)))
+        if midx < se.x:
+            stack.append((Cell(midx + 1, nw.y), Cell(se.x, midy)))
+        if midy < se.y:
+            stack.append((Cell(nw.x, midy + 1), Cell(midx, se.y)))
+        if midx < se.x and midy < se.y:
+            stack.append((Cell(midx + 1, midy + 1), se))
