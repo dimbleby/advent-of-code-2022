@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import deque
 from typing import Iterable
 
 from attrs import frozen
@@ -35,9 +36,9 @@ class HeightMap:
             if part_one
             else {cell for cell, height in self.heights.items() if height == 0}
         )
-        queue = [(cell, 0) for cell in visited]
+        queue = deque((cell, 0) for cell in visited)
         while queue:
-            cell, distance = queue.pop(0)
+            cell, distance = queue.popleft()
             if cell == self.end:
                 return distance
 

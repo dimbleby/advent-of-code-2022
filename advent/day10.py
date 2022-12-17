@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from typing import Iterator
 
 from attrs import define, frozen
 
@@ -53,7 +54,7 @@ class Addx(Instruction):
 
 @define
 class CPU:
-    program: list[Instruction]
+    program: Iterator[Instruction]
     x: int = 1
     active: Instruction | None = None
     active_age: int = 0
@@ -68,7 +69,7 @@ class CPU:
                 self.active_age = 0
 
         if self.active is None:
-            self.active = self.program.pop(0)
+            self.active = next(self.program)
 
 
 def solve() -> None:
@@ -78,7 +79,7 @@ def solve() -> None:
 
     instructions = [Instruction.from_text(line) for line in data.splitlines()]
 
-    cpu = CPU(program=instructions[:])
+    cpu = CPU(program=iter(instructions))
     total = 0
     for cycle in range(1, 221):
         cpu.tick()
@@ -87,7 +88,7 @@ def solve() -> None:
 
     print(f"Part one: {total}")
 
-    cpu = CPU(program=instructions[:])
+    cpu = CPU(program=iter(instructions))
     screen = [[" "] * 40 for _ in range(6)]
     for row in range(6):
         for column in range(40):
