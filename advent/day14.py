@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from attrs import define, frozen
+from attrs import define, frozen, field, Factory
 
 from advent.utils import data_dir
 
@@ -13,7 +13,7 @@ class Cell:
 
 @define
 class Map:
-    occupied: set[Cell] = set()
+    occupied: set[Cell] = field(default=Factory(set))
     maxy: int = 0
 
     def add_rock_path(self, text: str) -> None:

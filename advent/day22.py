@@ -1,7 +1,7 @@
 import re
 from typing import TypeAlias
 
-from attrs import define, field
+from attrs import Factory, define, field
 
 from advent.utils import data_dir
 
@@ -83,10 +83,10 @@ class Puzzle:
     map: dict[Coord, str]
     position: Coord = field(init=False)
     facing: Direction = RIGHT
-    _col_max: dict[int, int] = {}
-    _col_min: dict[int, int] = {}
-    _row_max: dict[int, int] = {}
-    _row_min: dict[int, int] = {}
+    _col_max: dict[int, int] = field(default=Factory(dict))
+    _col_min: dict[int, int] = field(default=Factory(dict))
+    _row_max: dict[int, int] = field(default=Factory(dict))
+    _row_min: dict[int, int] = field(default=Factory(dict))
 
     def __attrs_post_init__(self) -> None:
         for row, column in self.map:
