@@ -83,10 +83,10 @@ class Puzzle:
     map: dict[Coord, str]
     position: Coord = field(init=False)
     facing: Direction = RIGHT
-    _col_max: dict[int, int] = field(default=Factory(dict))
-    _col_min: dict[int, int] = field(default=Factory(dict))
-    _row_max: dict[int, int] = field(default=Factory(dict))
-    _row_min: dict[int, int] = field(default=Factory(dict))
+    _col_max: dict[int, int] = Factory(dict)
+    _col_min: dict[int, int] = Factory(dict)
+    _row_max: dict[int, int] = Factory(dict)
+    _row_min: dict[int, int] = Factory(dict)
 
     def __attrs_post_init__(self) -> None:
         for row, column in self.map:

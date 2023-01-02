@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections import deque
 from typing import TypeAlias
 
-from attrs import Factory, define, field, frozen
+from attrs import Factory, define, frozen
 
 from advent.utils import data_dir
 
@@ -24,7 +24,7 @@ class Map:
     ups: set[Coord]
     rows: int
     cols: int
-    occupied_cache: dict[int, set[Coord]] = field(default=Factory(dict))
+    occupied_cache: dict[int, set[Coord]] = Factory(dict)
 
     @staticmethod
     def from_text(text: str) -> Map:
