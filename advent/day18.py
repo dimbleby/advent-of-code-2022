@@ -1,7 +1,12 @@
+from __future__ import annotations
+
 from collections import deque
-from typing import Iterable, TypeAlias
+from typing import TYPE_CHECKING, TypeAlias
 
 from advent.utils import data_dir
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 Cube: TypeAlias = tuple[int, int, int]
 

@@ -2,11 +2,14 @@ from __future__ import annotations
 
 import itertools
 import re
-from typing import ClassVar, Sequence
+from typing import TYPE_CHECKING, ClassVar
 
 from attrs import frozen
 
 from advent.utils import data_dir
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
 
 
 @frozen

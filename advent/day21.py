@@ -2,11 +2,14 @@ from __future__ import annotations
 
 import operator
 from collections import deque
-from typing import Callable
+from typing import TYPE_CHECKING
 
 from attrs import frozen
 
 from advent.utils import data_dir
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 OPS = {
     "+": operator.add,

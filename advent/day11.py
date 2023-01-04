@@ -4,14 +4,14 @@ import itertools
 import operator
 from copy import deepcopy
 from functools import reduce
-from typing import TYPE_CHECKING, Iterator
+from typing import TYPE_CHECKING
 
 from attrs import define
 
 from advent.utils import data_dir
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Iterator
 
 
 @define

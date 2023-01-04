@@ -1,5 +1,10 @@
+from __future__ import annotations
+
 from pathlib import Path
-from typing import Iterator, TypeVar
+from typing import TYPE_CHECKING, TypeVar
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 T = TypeVar("T")
 

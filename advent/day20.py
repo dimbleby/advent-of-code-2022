@@ -1,6 +1,11 @@
-from typing import Sequence
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from advent.utils import data_dir
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
 
 KEY = 811589153
 

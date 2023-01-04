@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import itertools
-from typing import Iterator
+from typing import TYPE_CHECKING
 
 from attrs import define, frozen
 
 from advent.utils import data_dir
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 
 @frozen
